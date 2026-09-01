@@ -5,125 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suspirô Confeitaria - Delivery no Condomínio</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <img src="assets/images/logo.png" alt="Suspirô Confeitaria" class="logo">
-        <p class="tagline">Confeitaria Artesanal • Delivery no Condomínio</p>
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="logo-icon">🧁</span>
+                <span class="logo-text">Suspirô</span>
+            </div>
+            <button class="cart-btn" id="cartBtn">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-total" id="cartTotalHeader">R$ 0,00</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
     </header>
 
+    <!-- Banner -->
+    <div class="banner">
+        <span class="banner-icon">🚚</span>
+        <p class="banner-text">Entregas a pé no condomínio - Pague via PIX - Peça e receba em casa</p>
+    </div>
+
+    <!-- Main Content -->
     <main class="main">
+        <!-- Menu Section -->
         <section class="menu-section">
-            <div class="menu-header">
-                <h2 class="section-title">Cardápio</h2>
-                <div class="view-toggle">
-                    <button class="toggle-btn active" id="carouselViewBtn" title="Visualização em carrossel">
-                        <span class="toggle-icon">🖼️</span>
-                        <span class="toggle-text">Carrossel</span>
-                    </button>
-                    <button class="toggle-btn" id="listViewBtn" title="Visualização em lista">
-                        <span class="toggle-icon">📋</span>
-                        <span class="toggle-text">Lista</span>
-                    </button>
-                </div>
-            </div>
+            <h1 class="menu-title">Nosso Cardápio</h1>
+            <p class="menu-subtitle">Doces artesanais feitos com carinho 🧁</p>
 
-            <!-- Visualização em Carrossel -->
-            <div class="carousel-container" id="carouselContainer">
-                <button class="carousel-btn carousel-prev" id="carouselPrev">❮</button>
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Itens do cardápio serão inseridos via JavaScript -->
-                    </div>
-                </div>
-                <button class="carousel-btn carousel-next" id="carouselNext">❯</button>
+            <div class="menu-list" id="menuList">
+                <!-- Itens do cardápio serão inseridos via JavaScript -->
             </div>
-            <div class="carousel-dots" id="carouselDots"></div>
-
-            <!-- Visualização em Lista -->
-            <div class="list-container" id="listContainer" style="display: none;">
-                <div class="menu-list" id="menuList">
-                    <!-- Itens do cardápio serão inseridos via JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Lightbox para ampliar imagem -->
-        <div class="lightbox-overlay" id="lightboxOverlay">
-            <div class="lightbox-content">
-                <button class="lightbox-close" id="lightboxClose">&times;</button>
-                <img src="" alt="" class="lightbox-image" id="lightboxImage">
-                <div class="lightbox-caption">
-                    <h3 class="lightbox-title" id="lightboxTitle"></h3>
-                    <p class="lightbox-description" id="lightboxDescription"></p>
-                    <span class="lightbox-price" id="lightboxPrice"></span>
-                </div>
-                <div class="lightbox-nav">
-                    <button class="lightbox-btn lightbox-prev" id="lightboxPrev">❮</button>
-                    <button class="lightbox-btn lightbox-next" id="lightboxNext">❯</button>
-                </div>
-            </div>
-        </div>
-
-        <section class="cart-section" id="cartSection">
-            <h2 class="section-title">Seu Pedido</h2>
-            <div class="cart-items" id="cartItems">
-                <p class="empty-cart">Adicione itens ao seu pedido</p>
-            </div>
-            <div class="cart-total" id="cartTotal" style="display: none;">
-                <span>Total:</span>
-                <span class="total-value" id="totalValue">R$ 0,00</span>
-            </div>
-
-            <form class="customer-form" id="customerForm">
-                <div class="form-group">
-                    <label for="customerName">Nome</label>
-                    <input type="text" id="customerName" placeholder="Seu nome" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tower">Torre</label>
-                        <input type="text" id="tower" placeholder="Ex: A" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="apartment">Apartamento</label>
-                        <input type="text" id="apartment" placeholder="Ex: 101" required>
-                    </div>
-                </div>
-            </form>
-
-            <button class="whatsapp-btn" id="whatsappBtn" disabled>
-                📱 Solicitar para a Graci
-            </button>
         </section>
     </main>
 
-    <!-- Popup de Confirmação -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>✅ Confirmar Pedido</h3>
-                <button class="modal-close" id="modalClose">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="order-preview" id="orderPreview">
-                    <!-- Pré-visualização do pedido -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-cancel" id="btnCancel">Cancelar</button>
-                <button class="btn-confirm" id="btnConfirm">📱 Enviar WhatsApp</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Footer -->
     <footer class="footer">
-        <img src="assets/images/logo.png" alt="Suspirô" class="footer-logo">
-        <p>Suspirô Confeitaria © 2026</p>
+        <a href="admin.html" class="admin-link">⚙️ Acesso restrito (Admin)</a>
     </footer>
 
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Seu Pedido</h2>
+            <button class="cart-close" id="cartClose">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Seu carrinho está vazio</p>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span class="total-value" id="totalValue">R$ 0,00</span>
+            </div>
+            <form class="customer-form" id="customerForm">
+                <input type="text" id="customerName" placeholder="Seu nome" required>
+                <div class="form-row">
+                    <input type="text" id="tower" placeholder="Torre" required>
+                    <input type="text" id="apartment" placeholder="Apto" required>
+                </div>
+            </form>
+            <button class="whatsapp-btn" id="whatsappBtn">
+                📱 Solicitar para a Graci
+            </button>
+        </div>
+    </aside>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-text">Item adicionado!</span>
+    </div>
+
     <script src="js/app.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/whatsapp.js"></script>
 </body>
 </html>

@@ -47,12 +47,14 @@ body {
     }
 }
 
-/* Logo Image */
-.splash-logo {
-    width: 250px;
-    height: auto;
-    margin-bottom: 25px;
+/* Cake Illustration */
+.cake-illustration {
+    margin-bottom: 15px;
     animation: float 3s ease-in-out infinite;
+}
+
+.cake-illustration svg {
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 }
 
 @keyframes float {
@@ -62,6 +64,17 @@ body {
     50% {
         transform: translateY(-8px);
     }
+}
+
+/* Welcome Text */
+.welcome-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    opacity: 0.9;
+    letter-spacing: 1px;
 }
 
 /* Title */
@@ -130,13 +143,18 @@ body {
         font-size: 2.8rem;
     }
     
+    .welcome-text {
+        font-size: 1.5rem;
+    }
+    
     .splash-subtitle,
     .splash-location {
         font-size: 1.1rem;
     }
     
-    .splash-logo {
-        width: 220px;
+    .cake-illustration svg {
+        width: 150px;
+        height: 150px;
     }
     
     .splash-btn {

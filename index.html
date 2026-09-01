@@ -3,90 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suspirô Confeitaria - Delivery no Condomínio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Suspirô Confeitaria - Delícias da Graci</title>
+    <link rel="stylesheet" href="css/splash.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo-area">
-                <img src="assets/images/logo.png" alt="Suspirô Confeitaria" class="logo-img">
-            </a>
-            <button class="cart-btn" id="cartBtn" aria-label="Abrir carrinho">
-                <span class="cart-icon">🛒</span>
-                <span class="cart-total" id="cartTotalHeader">R$ 0,00</span>
-                <span class="cart-count" id="cartCount">0</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Banner -->
-    <div class="banner">
-        <div class="banner-content">
-            <span class="banner-icon">🚚</span>
-            <div class="banner-texts">
-                <p class="banner-highlight">Entregas a pé no condomínio</p>
-                <p class="banner-sub">Pague via PIX • Peça e receba em casa</p>
-            </div>
-        </div>
-    </div>
+    <!-- Decorative Elements -->
+    <div class="splash-decoration splash-decoration-1"></div>
+    <div class="splash-decoration splash-decoration-2"></div>
+    <div class="splash-decoration splash-decoration-3"></div>
 
     <!-- Main Content -->
-    <main class="main">
-        <!-- Menu Section -->
-        <section class="menu-section">
-            <h1 class="menu-title">Nosso Cardápio</h1>
-            <p class="menu-subtitle">Doces artesanais feitos com carinho 🧁</p>
-
-            <div class="menu-list" id="menuList">
-                <!-- Itens do cardápio serão inseridos via JavaScript -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <a href="admin.html" class="admin-link">⚙️ Acesso restrito (Admin)</a>
-    </footer>
-
-    <!-- Cart Sidebar -->
-    <div class="cart-overlay" id="cartOverlay"></div>
-    <aside class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h2>Seu Pedido</h2>
-            <button class="cart-close" id="cartClose">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p class="empty-cart">Seu carrinho está vazio</p>
-        </div>
-        <div class="cart-footer" id="cartFooter" style="display: none;">
-            <div class="cart-total-row">
-                <span>Total:</span>
-                <span class="total-value" id="totalValue">R$ 0,00</span>
-            </div>
-            <form class="customer-form" id="customerForm">
-                <input type="text" id="customerName" placeholder="Seu nome" required>
-                <div class="form-row">
-                    <input type="text" id="tower" placeholder="Torre" required>
-                    <input type="text" id="apartment" placeholder="Apto" required>
-                </div>
-            </form>
-            <button class="whatsapp-btn" id="whatsappBtn">
-                📱 Solicitar para a Graci
-            </button>
-        </div>
-    </aside>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <span class="toast-icon">✓</span>
-        <span class="toast-text">Item adicionado!</span>
+    <div class="splash-container">
+        <img src="assets/images/logo.png" alt="Suspirô Confeitaria" class="splash-logo">
+        
+        <h1 class="splash-title">SUSPIRÔ</h1>
+        
+        <p class="splash-subtitle">* Delícias da Graci *</p>
+        
+        <p class="splash-location">Entregas no Ilê</p>
+        
+        <a href="cardapio.html" class="splash-btn">FAZER PEDIDO AGORA</a>
     </div>
-
-    <script src="js/app.js"></script>
 </body>
 </html>

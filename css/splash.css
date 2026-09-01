@@ -6,6 +6,7 @@
 
 :root {
     --coral: #F4A3A0;
+    --coral-light: #F9C4C2;
     --coral-dark: #E8918E;
     --green-dark: #2D5A3D;
     --green-darker: #1E3D2A;
@@ -16,18 +17,22 @@
 body {
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(180deg, var(--coral) 0%, var(--coral-dark) 100%);
-    padding: 20px;
+    background: var(--coral-light);
 }
 
 /* Splash Container */
 .splash-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: var(--coral);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    padding: 40px 30px;
     animation: fadeIn 0.8s ease;
 }
 
@@ -44,9 +49,9 @@ body {
 
 /* Logo Image */
 .splash-logo {
-    width: 280px;
+    width: 250px;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     animation: float 3s ease-in-out infinite;
 }
 
@@ -55,25 +60,24 @@ body {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-8px);
     }
 }
 
 /* Title */
 .splash-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 900;
     color: var(--text-dark);
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Subtitles */
 .splash-subtitle {
     font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-style: italic;
     color: var(--text-dark);
     margin-bottom: 5px;
@@ -82,10 +86,10 @@ body {
 
 .splash-location {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-style: italic;
     color: var(--text-dark);
-    margin-bottom: 40px;
+    margin-bottom: 45px;
     opacity: 0.9;
 }
 
@@ -95,9 +99,9 @@ body {
     background: var(--green-dark);
     color: var(--white);
     text-decoration: none;
-    padding: 18px 50px;
+    padding: 16px 45px;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -115,35 +119,13 @@ body {
     transform: translateY(-1px);
 }
 
-/* Decorative Elements */
-.splash-decoration {
-    position: fixed;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: -1;
-}
-
-.splash-decoration-1 {
-    top: 10%;
-    left: -30px;
-}
-
-.splash-decoration-2 {
-    bottom: 15%;
-    right: -20px;
-}
-
-.splash-decoration-3 {
-    top: 50%;
-    right: 10%;
-    width: 60px;
-    height: 60px;
-}
-
-/* Responsive */
+/* Responsive - Mobile Full Screen */
 @media (max-width: 480px) {
+    .splash-container {
+        max-width: 100%;
+        padding: 30px 25px;
+    }
+    
     .splash-title {
         font-size: 2.8rem;
     }
@@ -154,7 +136,7 @@ body {
     }
     
     .splash-logo {
-        width: 240px;
+        width: 220px;
     }
     
     .splash-btn {

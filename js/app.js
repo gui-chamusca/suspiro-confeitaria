@@ -232,6 +232,9 @@ function updateCart() {
     const totalValue = document.getElementById('totalValue');
     const cartTotalHeader = document.getElementById('cartTotalHeader');
     const cartCount = document.getElementById('cartCount');
+    const cartBar = document.getElementById('cartBar');
+    const cartBarCount = document.getElementById('cartBarCount');
+    const cartBarTotal = document.getElementById('cartBarTotal');
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -239,6 +242,19 @@ function updateCart() {
     // Atualizar header
     cartTotalHeader.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
     cartCount.textContent = count;
+
+    // Atualizar barra do carrinho
+    if (cartBar && cartBarCount && cartBarTotal) {
+        if (cart.length === 0) {
+            cartBar.style.display = 'none';
+            document.body.classList.remove('has-cart-bar');
+        } else {
+            cartBar.style.display = 'flex';
+            cartBarCount.textContent = `(${count}) ${count === 1 ? 'item' : 'itens'}`;
+            cartBarTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            document.body.classList.add('has-cart-bar');
+        }
+    }
 
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>';
@@ -387,4 +403,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('customerForm').reset();
         }
     });
+
+    // Botão da barra do carrinho
+    const cartBarBtn = document.getElementById('cartBarBtn');
+    if (cartBarBtn) {
+        cartBarBtn.addEventListener('click', openCart);
+    }
 });

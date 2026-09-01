@@ -747,3 +747,107 @@ body {
         transition: none !important;
     }
 }
+
+/* Cart Bar */
+.cart-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--green-dark, #2D5A3D);
+    color: var(--white);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 90;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.cart-bar-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-bar-icon {
+    font-size: 1.5rem;
+}
+
+.cart-bar-count {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.cart-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-bar-total {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.cart-bar-btn {
+    background: var(--accent, #FF7B54);
+    color: var(--white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.cart-bar-btn:hover {
+    background: var(--accent-dark, #FF6B3D);
+    transform: scale(1.02);
+}
+
+.cart-bar-btn:active {
+    transform: scale(0.98);
+}
+
+/* Ajustar padding do main quando barra está visível */
+body.has-cart-bar .main {
+    padding-bottom: 80px;
+}
+
+body.has-cart-bar .footer {
+    margin-bottom: 70px;
+}
+
+/* Responsive Cart Bar */
+@media (max-width: 480px) {
+    .cart-bar {
+        padding: 12px 15px;
+    }
+    
+    .cart-bar-count {
+        font-size: 0.85rem;
+    }
+    
+    .cart-bar-total {
+        font-size: 1rem;
+    }
+    
+    .cart-bar-btn {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+}

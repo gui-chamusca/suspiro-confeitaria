@@ -13,11 +13,10 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo-area">
-                <span class="logo-icon">🧁</span>
-                <span class="logo-text">Suspirô</span>
-            </div>
-            <button class="cart-btn" id="cartBtn">
+            <a href="index.html" class="logo-area">
+                <img src="assets/images/logo.png" alt="Suspirô Confeitaria" class="logo-img">
+            </a>
+            <button class="cart-btn" id="cartBtn" aria-label="Abrir carrinho">
                 <span class="cart-icon">🛒</span>
                 <span class="cart-total" id="cartTotalHeader">R$ 0,00</span>
                 <span class="cart-count" id="cartCount">0</span>
@@ -27,8 +26,13 @@
 
     <!-- Banner -->
     <div class="banner">
-        <span class="banner-icon">🚚</span>
-        <p class="banner-text">Entregas a pé no condomínio - Pague via PIX - Peça e receba em casa</p>
+        <div class="banner-content">
+            <span class="banner-icon">🚚</span>
+            <div class="banner-texts">
+                <p class="banner-highlight">Entregas a pé no condomínio</p>
+                <p class="banner-sub">Pague via PIX • Peça e receba em casa</p>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->

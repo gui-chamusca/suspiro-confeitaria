@@ -7,7 +7,8 @@ const defaultMenuItems = [
         description: "Merengues leves e crocantes, derretendo na boca. Fofurinha da vovó.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjUwIiByPSIyNSIgZmlsbD0iI0ZGQ0I5NSIvPjxwYXRoIGQ9Ik00MCA4MCBRNjAgNjAgODAgODAiIHN0cm9rZT0iI0U4OTE4RSIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+PC9zdmc+",
         category: "Doces",
-        available: true
+        available: true,
+        badge: null
     },
     {
         id: 2,
@@ -16,7 +17,8 @@ const defaultMenuItems = [
         description: "Massa fofinha com pedaços de paçoca e cobertura caramelizada.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNENkE1NzQiLz48cmVjdCB4PSIyNSIgeT0iMzUiIHdpZHRoPSI3MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
         category: "Bolos",
-        available: true
+        available: true,
+        badge: "popular"
     },
     {
         id: 3,
@@ -25,7 +27,8 @@ const defaultMenuItems = [
         description: "Brigadeiro cremoso com granulado belga, no ponto perfeito.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iIzRBMkRCOCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjNkIzQTIwIi8+PC9zdmc+",
         category: "Doces",
-        available: true
+        available: true,
+        badge: "popular"
     },
     {
         id: 4,
@@ -34,7 +37,8 @@ const defaultMenuItems = [
         description: "Mousse aveludado com calda de maracujá fresco por cima.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZDOTUiLz48cGF0aCBkPSIzMCA1NSBRNjAgNDAgOTAgNTUiIHN0cm9rZT0iI0ZGQjc1NCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PC9zdmc+",
         category: "Tortas",
-        available: true
+        available: true,
+        badge: null
     },
     {
         id: 5,
@@ -43,7 +47,8 @@ const defaultMenuItems = [
         description: "Docinho de coco fresco com toque de leite condensado e cravo.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iI0ZGRUZGQSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjRkZGQ0E5Ii8+PC9zdmc+",
         category: "Doces",
-        available: true
+        available: true,
+        badge: null
     },
     {
         id: 6,
@@ -52,7 +57,8 @@ const defaultMenuItems = [
         description: "Bolo fofo de cenoura com cobertura generosa de chocolate belga.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNDUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0NSIgcng9IjgiIGZpbGw9IiNFQTYzMTYiLz48cmVjdCB4PSIyMCIgeT0iMzgiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiM0QTJEQjgiLz48L3N2Zz4=",
         category: "Bolos",
-        available: true
+        available: true,
+        badge: null
     },
     {
         id: 7,
@@ -61,7 +67,8 @@ const defaultMenuItems = [
         description: "Torta cremosa de limão com merengue tostado e base de biscoito.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNTAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZGIjciLz48cmVjdCB4PSIyMCIgeT0iNDMiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
         category: "Tortas",
-        available: true
+        available: true,
+        badge: "new"
     },
     {
         id: 8,
@@ -70,7 +77,8 @@ const defaultMenuItems = [
         description: "Cookie crocante com gotas de chocolate belga derretido.",
         image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyNSIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiM0QTJEQjgiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjQ4IiByPSI0IiBmaWxsPSIjNEEyREI4Ii8+PC9zdmc+",
         category: "Cookies",
-        available: true
+        available: true,
+        badge: "new"
     }
 ];
 
@@ -148,10 +156,21 @@ function renderMenu() {
 function createMenuItem(item) {
     const div = document.createElement('div');
     div.className = 'menu-item';
+    
+    let badgeHTML = '';
+    if (item.badge === 'popular') {
+        badgeHTML = '<span class="menu-item-badge badge-popular">🔥 Popular</span>';
+    } else if (item.badge === 'new') {
+        badgeHTML = '<span class="menu-item-badge badge-new">✨ Novo</span>';
+    }
+    
     div.innerHTML = `
         <img src="${item.image}" alt="${item.name}" class="menu-item-image" onclick="openLightbox(${item.id})">
         <div class="menu-item-content">
-            <h3 class="menu-item-name">${item.name}</h3>
+            <div class="menu-item-header">
+                <h3 class="menu-item-name">${item.name}</h3>
+                ${badgeHTML}
+            </div>
             <p class="menu-item-description">${item.description}</p>
             <div class="menu-item-footer">
                 <span class="menu-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>

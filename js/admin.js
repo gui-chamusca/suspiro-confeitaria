@@ -12,75 +12,83 @@ let currentItemImage = null;
 const defaultMenuItems = [
     {
         id: 1,
-        name: "Brigadeiro",
-        price: 3.00,
-        description: "Brigadeiro tradicional cremoso, feito com leite condensado e chocolate.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iIzREMjYxQyIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjMwIiBmaWxsPSIjNkIzQTIwIi8+PC9zdmc+",
+        name: "Suspiros Clássicos",
+        price: 12.00,
+        description: "Merengues leves e crocantes, derretendo na boca. Fofurinha da vovó.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjUwIiByPSIyNSIgZmlsbD0iI0ZGQ0I5NSIvPjxwYXRoIGQ9Ik00MCA4MCBRNjAgNjAgODAgODAiIHN0cm9rZT0iI0U4OTE4RSIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+PC9zdmc+",
         category: "Doces",
-        available: true
+        available: true,
+        badge: null
     },
     {
         id: 2,
-        name: "Bolo de Cenoura",
-        price: 45.00,
-        description: "Bolo fofo de cenoura com cobertura generosa de chocolate.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48cmVjdCB4PSI0MCIgeT0iNjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNzAiIHJ4PSIxMCIgZmlsbD0iI0VBNjMxNiIvPjxyZWN0IHg9IjMwIiB5PSI1MCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyMCIgcng9IjUiIGZpbGw9IiM0QTJEQjgiLz48L3N2Zz4=",
+        name: "Bolo de Paçoca",
+        price: 28.00,
+        description: "Massa fofinha com pedaços de paçoca e cobertura caramelizada.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNENkE1NzQiLz48cmVjdCB4PSIyNSIgeT0iMzUiIHdpZHRoPSI3MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
         category: "Bolos",
-        available: true
+        available: true,
+        badge: "popular"
     },
     {
         id: 3,
-        name: "Torta de Limão",
-        price: 55.00,
-        description: "Torta cremosa de limão com merengue tostado e base de biscoito.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48cmVjdCB4PSIzMCIgeT0iNzAiIHdpZHRoPSIxMjAiIGhlaWdodD0iNjAiIHJ4PSIxMCIgZmlsbD0iI0Y3RkZCNyIvPjxyZWN0IHg9IjI1IiB5PSI2MCIgd2lkdGg9IjEzMCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
-        category: "Tortas",
-        available: true
+        name: "Brigadeiro Gourmet",
+        price: 18.00,
+        description: "Brigadeiro cremoso com granulado belga, no ponto perfeito.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iIzRBMkRCOCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjNkIzQTIwIi8+PC9zdmc+",
+        category: "Doces",
+        available: true,
+        badge: "popular"
     },
     {
         id: 4,
-        name: "Cookie de Chocolate",
-        price: 8.00,
-        description: "Cookie crocante com gotas de chocolate belga derretido.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjcwIiBjeT0iODAiIHI9IjgiIGZpbGw9IiM0QTJEQjgiLz48Y2lyY2xlIGN4PSIxMTAiIGN5PSI4NSIgcj0iNiIgZmlsbD0iIzRBMkRCOCIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMTA1IiByPSI3IiBmaWxsPSIjNEEyREI4Ii8+PC9zdmc+",
-        category: "Cookies",
-        available: true
+        name: "Mousse de Maracujá",
+        price: 16.00,
+        description: "Mousse aveludado com calda de maracujá fresco por cima.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZDOTUiLz48cGF0aCBkPSIzMCA1NSBRNjAgNDAgOTAgNTUiIHN0cm9rZT0iI0ZGQjc1NCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PC9zdmc+",
+        category: "Tortas",
+        available: true,
+        badge: null
     },
     {
         id: 5,
-        name: "Cupcake de Morango",
-        price: 12.00,
-        description: "Cupcake fofinho com cobertura de cream cheese e morango fresco.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48cGF0aCBkPSJNNjAgMTIwIEwxMjAgMTIwIEwxMTAgODAgTDcwIDgwIFoiIGZpbGw9IiNGRkZGRkYiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjcwIiByPSIyNSIgZmlsbD0iI0ZGNkI2QSIvPjxwYXRoIGQ9Ik04NSA1NSBMMTAwIDUwIEw5NSA2NSBaIiBmaWxsPSIjRkY0NDRCIi8+PC9zdmc+",
-        category: "Cupcakes",
-        available: true
+        name: "Beijinho de Coco",
+        price: 14.00,
+        description: "Docinho de coco fresco com toque de leite condensado e cravo.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iI0ZGRUZGQSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjRkZGQ0E5Ii8+PC9zdmc+",
+        category: "Doces",
+        available: true,
+        badge: null
     },
     {
         id: 6,
-        name: "Pavê de Morango",
-        price: 65.00,
-        description: "Camadas de biscoito champagne, creme pasteleiro e morangos frescos.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48cmVjdCB4PSIzMCIgeT0iNjAiIHdpZHRoPSIxMjAiIGhlaWdodD0iNzAiIHJ4PSI1IiBmaWxsPSIjRkZGQ0E5Ii8+PHJlY3QgeD0iMzAiIHk9IjcwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjRkY0NDRCIi8+PHJlY3QgeD0iMzAiIHk9IjkwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjRkZGQ0E5Ii8+PC9zdmc+",
-        category: "Tortas",
-        available: true
+        name: "Bolo de Cenoura",
+        price: 45.00,
+        description: "Bolo fofo de cenoura com cobertura generosa de chocolate belga.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNDUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0NSIgcng9IjgiIGZpbGw9IiNFQTYzMTYiLz48cmVjdCB4PSIyMCIgeT0iMzgiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiM0QTJEQjgiLz48L3N2Zz4=",
+        category: "Bolos",
+        available: true,
+        badge: null
     },
     {
         id: 7,
-        name: "Rosquinha de Açúcar",
-        price: 5.00,
-        description: "Rosquinha caseira fofinha polvilhada com açúcar e canela.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI0MCIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjE1IiBmaWxsPSIjQjVEOENDIi8+PC9zdmc+",
-        category: "Doces",
-        available: true
+        name: "Torta de Limão",
+        price: 55.00,
+        description: "Torta cremosa de limão com merengue tostado e base de biscoito.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNTAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZGIjciLz48cmVjdCB4PSIyMCIgeT0iNDMiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
+        category: "Tortas",
+        available: true,
+        badge: "new"
     },
     {
         id: 8,
-        name: "Beijinho",
-        price: 3.00,
-        description: "Beijinho cremoso de coco com cobertura de granulado dourado.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNCNUQ4Q0MiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSIzMCIgZmlsbD0iI0ZGRTY4QyIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjIwIiBmaWxsPSIjRkZGQ0E5Ii8+PC9zdmc+",
-        category: "Doces",
-        available: true
+        name: "Cookie de Chocolate",
+        price: 8.00,
+        description: "Cookie crocante com gotas de chocolate belga derretido.",
+        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyNSIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiM0QTJEQjgiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjQ4IiByPSI0IiBmaWxsPSIjNEEyREI4Ii8+PC9zdmc+",
+        category: "Cookies",
+        available: true,
+        badge: "new"
     }
 ];
 
@@ -293,7 +301,7 @@ function loadConfig() {
     const config = JSON.parse(localStorage.getItem('suspiroConfig') || '{}');
     document.getElementById('businessName').value = config.businessName || 'Suspirô Confeitaria';
     document.getElementById('ownerName').value = config.ownerName || 'Graci';
-    document.getElementById('whatsappNumber').value = config.whatsappNumber || '5511999999999';
+    document.getElementById('whatsappNumber').value = config.whatsappNumber || '5511972006824';
 }
 
 // Salvar configurações

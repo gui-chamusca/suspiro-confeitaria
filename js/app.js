@@ -86,7 +86,7 @@ const defaultMenuItems = [
 const appConfig = {
     businessName: "Suspirô Confeitaria",
     ownerName: "Graci",
-    whatsappNumber: "5511999999999"
+    whatsappNumber: "5511972006824"
 };
 
 // Estado do aplicativo
@@ -338,8 +338,8 @@ function formatOrderMessage() {
         return null;
     }
 
-    let message = `🧁 *Pedido ${appConfig.businessName}*\n\n`;
-    message += `Olá ${appConfig.ownerName}! Gostaria de fazer o pedido:\n\n`;
+    let message = `Oi, ${appConfig.ownerName}! Tudo bem? 😊\n\n`;
+    message += `Sou o(a) ${name} e queria pedir:\n\n`;
 
     let total = 0;
     cart.forEach(item => {
@@ -349,11 +349,9 @@ function formatOrderMessage() {
     });
 
     message += `\n💰 *Total: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
-    message += `📍 *Localização:*\n`;
-    message += `Torre: ${tower}\n`;
-    message += `Apartamento: ${apartment}\n\n`;
-    message += `👤 *Nome:* ${name}\n`;
-    message += `\nObrigado! 😊`;
+    message += `Moro na Torre ${tower}, apto ${apartment}.\n\n`;
+    message += `Você tem aí? 😄\n\n`;
+    message += `Obrigado(a)!`;
 
     return message;
 }

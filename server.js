@@ -9,6 +9,16 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static('.'));
 
+// Servir arquivos .html sem extensão
+app.get('/:name', (req, res) => {
+    const filePath = path.join(__dirname, `${req.params.name}.html`);
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Página não encontrada');
+    }
+});
+
 // Caminhos dos arquivos
 const MENU_FILE = path.join(__dirname, 'data', 'menu.json');
 const CONFIG_FILE = path.join(__dirname, 'data', 'config.json');

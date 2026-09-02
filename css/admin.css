@@ -589,20 +589,60 @@ body {
     .admin-header {
         flex-direction: column;
         text-align: center;
+        padding: 15px;
     }
 
     .header-content {
         flex-direction: column;
+        gap: 15px;
+    }
+
+    .header-logo {
+        width: 80px;
+    }
+
+    .header-info h1 {
+        font-size: 1.2rem;
+    }
+
+    .admin-main {
+        padding: 15px;
+    }
+
+    .config-section,
+    .item-section,
+    .list-section {
+        padding: 20px 15px;
+    }
+
+    .config-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
     }
 
     .admin-item {
         flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .admin-item-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 15px;
+    }
+
+    .admin-item-info {
         text-align: center;
     }
 
     .admin-item-actions {
         width: 100%;
         justify-content: center;
+        margin-top: 15px;
     }
 
     .form-buttons {
@@ -612,5 +652,66 @@ body {
     .save-item-btn,
     .cancel-btn {
         width: 100%;
+    }
+
+    .modal {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .success-message {
+        left: 20px;
+        right: 20px;
+        text-align: center;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    .login-logo {
+        max-width: 120px;
+    }
+
+    .login-card h1 {
+        font-size: 1.3rem;
+    }
+
+    .admin-item-name {
+        font-size: 1rem;
+    }
+
+    .admin-item-price {
+        font-size: 1rem;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+    .admin-main {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .config-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-item {
+        padding: 20px;
+    }
+
+    .admin-item-image {
+        width: 120px;
+        height: 120px;
     }
 }

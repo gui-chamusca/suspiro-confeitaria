@@ -317,19 +317,19 @@ function formatOrderMessage() {
         return null;
     }
 
-    let message = `Oi, ${appConfig.ownerName}! Tudo bem? 😊\n\n`;
+    let message = `Oi, ${appConfig.ownerName}! Tudo bem?\n\n`;
     message += `Sou o(a) ${name} e queria pedir:\n\n`;
 
     let total = 0;
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        message += `• ${item.quantity}x ${item.name} - R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
+        message += `- ${item.quantity}x ${item.name} - R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
     });
 
-    message += `\n💰 *Total: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
+    message += `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
     message += `Moro na Torre ${tower}, apto ${apartment}.\n\n`;
-    message += `Você tem aí? 😄\n\n`;
+    message += `Voce tem ai?\n\n`;
     message += `Obrigado(a)!`;
 
     return message;

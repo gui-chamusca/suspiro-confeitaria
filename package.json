@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Web app de delivery para confeitaria",
   "scripts": {
-    "start": "npx serve -s ."
+    "start": "npx serve ."
   },
   "engines": {
     "node": "18.x"

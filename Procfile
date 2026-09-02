@@ -1,1 +1,1 @@
-web: npx serve .
+web: node server.js

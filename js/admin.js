@@ -1,138 +1,164 @@
 // Admin Panel - Suspirô Confeitaria
 
-// Senha padrão (em produção, usar hash)
-const DEFAULT_PASSWORD = "suspiro2026";
-
 // Estado do admin
 let isLoggedIn = false;
 let editingItemId = null;
 let currentItemImage = null;
+let adminToken = null;
+let menuItems = [];
 
-// Dados iniciais do cardápio (mesmos do app.js)
-const defaultMenuItems = [
-    {
-        id: 1,
-        name: "Suspiros Clássicos",
-        price: 12.00,
-        description: "Merengues leves e crocantes, derretendo na boca. Fofurinha da vovó.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjUwIiByPSIyNSIgZmlsbD0iI0ZGQ0I5NSIvPjxwYXRoIGQ9Ik00MCA4MCBRNjAgNjAgODAgODAiIHN0cm9rZT0iI0U4OTE4RSIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+PC9zdmc+",
-        category: "Doces",
-        available: true,
-        badge: null
-    },
-    {
-        id: 2,
-        name: "Bolo de Paçoca",
-        price: 28.00,
-        description: "Massa fofinha com pedaços de paçoca e cobertura caramelizada.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNENkE1NzQiLz48cmVjdCB4PSIyNSIgeT0iMzUiIHdpZHRoPSI3MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
-        category: "Bolos",
-        available: true,
-        badge: "popular"
-    },
-    {
-        id: 3,
-        name: "Brigadeiro Gourmet",
-        price: 18.00,
-        description: "Brigadeiro cremoso com granulado belga, no ponto perfeito.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iIzRBMkRCOCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjNkIzQTIwIi8+PC9zdmc+",
-        category: "Doces",
-        available: true,
-        badge: "popular"
-    },
-    {
-        id: 4,
-        name: "Mousse de Maracujá",
-        price: 16.00,
-        description: "Mousse aveludado com calda de maracujá fresco por cima.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZDOTUiLz48cGF0aCBkPSIzMCA1NSBRNjAgNDAgOTAgNTUiIHN0cm9rZT0iI0ZGQjc1NCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PC9zdmc+",
-        category: "Tortas",
-        available: true,
-        badge: null
-    },
-    {
-        id: 5,
-        name: "Beijinho de Coco",
-        price: 14.00,
-        description: "Docinho de coco fresco com toque de leite condensado e cravo.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyMiIgZmlsbD0iI0ZGRUZGQSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTUiIHI9IjEyIiBmaWxsPSIjRkZGQ0E5Ii8+PC9zdmc+",
-        category: "Doces",
-        available: true,
-        badge: null
-    },
-    {
-        id: 6,
-        name: "Bolo de Cenoura",
-        price: 45.00,
-        description: "Bolo fofo de cenoura com cobertura generosa de chocolate belga.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNDUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0NSIgcng9IjgiIGZpbGw9IiNFQTYzMTYiLz48cmVjdCB4PSIyMCIgeT0iMzgiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiM0QTJEQjgiLz48L3N2Zz4=",
-        category: "Bolos",
-        available: true,
-        badge: null
-    },
-    {
-        id: 7,
-        name: "Torta de Limão",
-        price: 55.00,
-        description: "Torta cremosa de limão com merengue tostado e base de biscoito.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNTAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZGIjciLz48cmVjdCB4PSIyMCIgeT0iNDMiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
-        category: "Tortas",
-        available: true,
-        badge: "new"
-    },
-    {
-        id: 8,
-        name: "Cookie de Chocolate",
-        price: 8.00,
-        description: "Cookie crocante com gotas de chocolate belga derretido.",
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyNSIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiM0QTJEQjgiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjQ4IiByPSI0IiBmaWxsPSIjNEEyREI4Ii8+PC9zdmc+",
-        category: "Cookies",
-        available: true,
-        badge: "new"
-    }
-];
+// ==================== INICIALIZAÇÃO ====================
 
 // Inicializar admin
-function initAdmin() {
+async function initAdmin() {
     // Verificar se está logado
-    const loggedIn = sessionStorage.getItem('suspiroAdminLoggedIn');
-    if (loggedIn === 'true') {
+    const savedToken = sessionStorage.getItem('suspiroAdminToken');
+    if (savedToken) {
+        adminToken = savedToken;
         isLoggedIn = true;
         showAdminPanel();
     }
-
-    // Carregar cardápio
-    loadMenu();
 
     // Event listeners
     setupEventListeners();
 }
 
-// Carregar cardápio
-function loadMenu() {
-    const savedMenu = localStorage.getItem('suspiroMenu');
-    if (savedMenu) {
-        return JSON.parse(savedMenu);
-    } else {
-        // Salvar cardápio padrão
-        localStorage.setItem('suspiroMenu', JSON.stringify(defaultMenuItems));
-        return defaultMenuItems;
+// ==================== API ====================
+
+// Buscar cardápio da API
+async function loadMenuFromAPI() {
+    try {
+        const response = await fetch('/api/menu');
+        if (response.ok) {
+            const data = await response.json();
+            menuItems = data.items || [];
+            return menuItems;
+        }
+    } catch (error) {
+        console.error('Erro ao carregar cardápio:', error);
+    }
+    return [];
+}
+
+// Salvar cardápio na API
+async function saveMenuToAPI(menu) {
+    try {
+        const response = await fetch('/api/menu', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Password': adminToken
+            },
+            body: JSON.stringify({ items: menu })
+        });
+        
+        if (response.ok) {
+            return true;
+        } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Erro ao salvar');
+        }
+    } catch (error) {
+        console.error('Erro ao salvar cardápio:', error);
+        alert('Erro ao salvar: ' + error.message);
+        return false;
     }
 }
 
-// Salvar cardápio
-function saveMenu(menu) {
-    localStorage.setItem('suspiroMenu', JSON.stringify(menu));
+// Buscar configurações da API
+async function loadConfigFromAPI() {
+    try {
+        const response = await fetch('/api/config');
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Erro ao carregar configurações:', error);
+    }
+    return {};
 }
+
+// Salvar configurações na API
+async function saveConfigToAPI(config) {
+    try {
+        const response = await fetch('/api/config', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Password': adminToken
+            },
+            body: JSON.stringify(config)
+        });
+        
+        if (response.ok) {
+            return true;
+        } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Erro ao salvar');
+        }
+    } catch (error) {
+        console.error('Erro ao salvar configurações:', error);
+        alert('Erro ao salvar: ' + error.message);
+        return false;
+    }
+}
+
+// ==================== LOGIN ====================
+
+// Login
+async function login(password) {
+    try {
+        const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            adminToken = password;
+            isLoggedIn = true;
+            sessionStorage.setItem('suspiroAdminToken', password);
+            showAdminPanel();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        return false;
+    }
+}
+
+// Logout
+function logout() {
+    isLoggedIn = false;
+    adminToken = null;
+    sessionStorage.removeItem('suspiroAdminToken');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminPanel').style.display = 'none';
+}
+
+// Mostrar painel admin
+async function showAdminPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    
+    // Carregar dados da API
+    await loadMenuFromAPI();
+    renderItemsList();
+    await loadConfigUI();
+}
+
+// ==================== MENU ====================
 
 // Renderizar lista de itens
 function renderItemsList() {
     const itemsList = document.getElementById('itemsList');
-    const menu = loadMenu();
-
     itemsList.innerHTML = '';
 
-    menu.forEach(item => {
+    menuItems.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'admin-item';
         itemDiv.innerHTML = `
@@ -154,8 +180,7 @@ function renderItemsList() {
 
 // Editar item
 function editItem(itemId) {
-    const menu = loadMenu();
-    const item = menu.find(i => i.id === itemId);
+    const item = menuItems.find(i => i.id === itemId);
     if (!item) return;
 
     editingItemId = itemId;
@@ -184,10 +209,9 @@ function editItem(itemId) {
 
 // Excluir item
 function deleteItem(itemId) {
-    showModal('Excluir Item', 'Tem certeza que deseja excluir este item do cardápio?', () => {
-        let menu = loadMenu();
-        menu = menu.filter(i => i.id !== itemId);
-        saveMenu(menu);
+    showModal('Excluir Item', 'Tem certeza que deseja excluir este item do cardápio?', async () => {
+        menuItems = menuItems.filter(i => i.id !== itemId);
+        await saveMenuToAPI(menuItems);
         renderItemsList();
         showSuccessMessage('Item excluído com sucesso!');
     });
@@ -207,10 +231,9 @@ function clearForm() {
 }
 
 // Salvar item
-function saveItem(e) {
+async function saveItem(e) {
     e.preventDefault();
 
-    const menu = loadMenu();
     const name = document.getElementById('itemName').value.trim();
     const price = parseFloat(document.getElementById('itemPrice').value);
     const description = document.getElementById('itemDescription').value.trim();
@@ -220,10 +243,10 @@ function saveItem(e) {
 
     if (editingItemId) {
         // Editar item existente
-        const index = menu.findIndex(i => i.id === editingItemId);
+        const index = menuItems.findIndex(i => i.id === editingItemId);
         if (index !== -1) {
-            menu[index] = {
-                ...menu[index],
+            menuItems[index] = {
+                ...menuItems[index],
                 name,
                 price,
                 description,
@@ -234,8 +257,8 @@ function saveItem(e) {
         }
     } else {
         // Adicionar novo item
-        const newId = menu.length > 0 ? Math.max(...menu.map(i => i.id)) + 1 : 1;
-        menu.push({
+        const newId = menuItems.length > 0 ? Math.max(...menuItems.map(i => i.id)) + 1 : 1;
+        menuItems.push({
             id: newId,
             name,
             price,
@@ -246,10 +269,12 @@ function saveItem(e) {
         });
     }
 
-    saveMenu(menu);
-    renderItemsList();
-    clearForm();
-    showSuccessMessage(editingItemId ? 'Item atualizado com sucesso!' : 'Item adicionado com sucesso!');
+    const saved = await saveMenuToAPI(menuItems);
+    if (saved) {
+        renderItemsList();
+        clearForm();
+        showSuccessMessage(editingItemId ? 'Item atualizado com sucesso!' : 'Item adicionado com sucesso!');
+    }
 }
 
 // Gerar imagem placeholder
@@ -266,62 +291,38 @@ function generatePlaceholderImage(name) {
     `)}`;
 }
 
-// Login
-function login(password) {
-    // Verificar senha salva ou usar padrão
-    const savedPassword = localStorage.getItem('suspiroAdminPassword') || DEFAULT_PASSWORD;
-    
-    if (password === savedPassword) {
-        isLoggedIn = true;
-        sessionStorage.setItem('suspiroAdminLoggedIn', 'true');
-        showAdminPanel();
-        return true;
-    }
-    return false;
-}
+// ==================== CONFIGURAÇÕES ====================
 
-// Logout
-function logout() {
-    isLoggedIn = false;
-    sessionStorage.removeItem('suspiroAdminLoggedIn');
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('adminPanel').style.display = 'none';
-}
-
-// Mostrar painel admin
-function showAdminPanel() {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    renderItemsList();
-    loadConfig();
-}
-
-// Carregar configurações
-function loadConfig() {
-    const config = JSON.parse(localStorage.getItem('suspiroConfig') || '{}');
+// Carregar configurações na UI
+async function loadConfigUI() {
+    const config = await loadConfigFromAPI();
     document.getElementById('businessName').value = config.businessName || 'Suspirô Confeitaria';
     document.getElementById('ownerName').value = config.ownerName || 'Graci';
     document.getElementById('whatsappNumber').value = config.whatsappNumber || '5511972006824';
 }
 
 // Salvar configurações
-function saveConfig() {
+async function saveConfig() {
     const config = {
         businessName: document.getElementById('businessName').value,
         ownerName: document.getElementById('ownerName').value,
         whatsappNumber: document.getElementById('whatsappNumber').value
     };
-    localStorage.setItem('suspiroConfig', JSON.stringify(config));
 
     // Salvar nova senha se fornecida
     const newPassword = document.getElementById('newPassword').value;
     if (newPassword) {
-        localStorage.setItem('suspiroAdminPassword', newPassword);
+        config.adminPassword = newPassword;
         document.getElementById('newPassword').value = '';
     }
 
-    showSuccessMessage('Configurações salvas com sucesso!');
+    const saved = await saveConfigToAPI(config);
+    if (saved) {
+        showSuccessMessage('Configurações salvas com sucesso!');
+    }
 }
+
+// ==================== UI ====================
 
 // Mostrar modal
 function showModal(title, message, onConfirm) {
@@ -356,13 +357,16 @@ function showSuccessMessage(message) {
     }, 3000);
 }
 
+// ==================== EVENT LISTENERS ====================
+
 // Setup event listeners
 function setupEventListeners() {
     // Login form
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const password = document.getElementById('password').value;
-        if (!login(password)) {
+        const success = await login(password);
+        if (!success) {
             alert('Senha incorreta!');
         }
     });

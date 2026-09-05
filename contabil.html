@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1c1917">
+<title>Contábil Semanal — só você</title>
+<link rel="stylesheet" href="css/negocinho.css">
+<style>
+body{background:#f5f5f4}
+.wrap{max-width:900px;margin:0 auto;padding:16px 14px 60px}
+.grid3{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:700px){.grid3{grid-template-columns:repeat(3,1fr)}}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:15px}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+th{background:#1c1917;color:#fff}
+.mono{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>📊 Contábil Semanal <small style="font-size:13px;color:#666">(só você, fora do app da Graci)</small></h1>
+<p class="hint">Semana padrão seg–dom. Fonte: mesmos JSONs manuais. Nada muda pra Graci.</p>
+<div class="box">
+<div class="grid2">
+<label>De (seg) <input type="date" id="de"></label>
+<label>Até (dom) <input type="date" id="ate"></label>
+</div>
+<div class="filter-row" style="margin-top:10px">
+<button class="chip active" data-n="tudo">Tudo</button>
+<button class="chip" data-n="suspiro">🍰 Suspiro</button>
+<button class="chip" data-n="pizza">🍕 Pizza</button>
+<button class="ghost" id="prevW">◀ semana anterior</button>
+<button class="ghost" id="thisW">esta semana</button>
+</div>
+<button class="big orange" id="load">Atualizar semana</button>
+</div>
+
+<div class="grid3">
+<div class="card"><span>Suspiro faturou</span><strong id="sFat">—</strong></div>
+<div class="card"><span>Suspiro gastou</span><strong id="sGasto">—</strong></div>
+<div class="card yellow"><span>Suspiro sobrou (margem)</span><strong id="sSobrou">—</strong></div>
+</div>
+<div class="grid3">
+<div class="card"><span>Pizza faturou</span><strong id="pFat">—</strong></div>
+<div class="card"><span>Pizza custo</span><strong id="pCusto">—</strong></div>
+<div class="card yellow"><span>Pizza lucro (ticket)</span><strong id="pLucro">—</strong></div>
+</div>
+<div class="total-line">Semana: faturou <strong id="tFat">—</strong> • custou <strong id="tCusto">—</strong> • <strong>sobrou <span id="tSobrou">—</span></strong> • <span id="meta"></span></div>
+<div class="box"><b>Fiado aberto:</b> <span id="fiado">—</span> • <b>Encomendas abertas:</b> <span id="enc">—</span> <span id="encFalta"></span></div>
+
+<h3>Brutos por produto (Suspiro)</h3>
+<table><thead><tr><th>Produto</th><th>Qtd</th><th>R$</th></tr></thead><tbody id="tbProd"></tbody></table>
+<h3>Brutos por sabor (Pizza)</h3>
+<table><thead><tr><th>Sabor</th><th>Fina</th><th>Grossa</th><th>Total</th></tr></thead><tbody id="tbSabor"></tbody></table>
+
+<h3>Esmiuçar fora</h3>
+<div class="rowbtns">
+<button class="ghost" data-csv="dia">⬇ dia.csv</button>
+<button class="ghost" data-csv="pizza">⬇ pizza.csv</button>
+<button class="ghost" data-csv="fiados">⬇ fiados.csv</button>
+<button class="ghost" data-csv="encomendas">⬇ encomendas.csv</button>
+</div>
+<p class="hint">Abre no Sheets/Excel → Dados → Tabela dinâmica. Ex: margem por semana, ticket pizza, top sabor.</p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const BRL=v=>(Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+let neg='tudo';
+function monday(d){d=d?new Date(d+'T12:00:00'):new Date();const k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return d;}
+function fmt(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function setWeek(ref){const m=monday(ref);const f=new Date(m);f.setDate(f.getDate()+6);$('de').value=fmt(m);$('ate').value=fmt(f);}
+async function load(){
+  const r=await fetch(`/api/resumo?de=${$('de').value}&ate=${$('ate').value}&negocio=${neg}`);
+  const j=await r.json();
+  $('sFat').textContent=BRL(j.suspiro.faturamento);
+  $('sGasto').textContent=BRL(j.suspiro.gasto);
+  $('sSobrou').textContent=`${BRL(j.suspiro.sobrou)} (${Math.round(j.suspiro.margem*100)}%)`;
+  $('pFat').textContent=BRL(j.pizza.faturamento);
+  $('pCusto').textContent=BRL(j.pizza.custo);
+  $('pLucro').textContent=`${BRL(j.pizza.lucro)} (${BRL(j.pizza.ticket)}/pz)`;
+  $('tFat').textContent=BRL(j.total.faturamento);
+  $('tCusto').textContent=BRL(j.total.custo);
+  $('tSobrou').textContent=BRL(j.total.sobrou);
+  $('meta').textContent=`${j.dias_qtd} dias + ${j.noites_qtd} noites de pizza`;
+  $('fiado').textContent=`${BRL(j.fiado_aberto)} (${j.fiados_qtd})`;
+  $('enc').textContent=j.encomendas_abertas;
+  $('encFalta').textContent=j.encomendas_falta?`• falta receber ${BRL(j.encomendas_falta)}`:'';
+  $('tbProd').innerHTML=Object.entries(j.porProduto||{}).map(([k,v])=>`<tr><td>${k}</td><td class="mono">${v.qtd}</td><td class="mono">${BRL(v.valor)}</td></tr>`).join('')||'<tr><td colspan=3>Sem vendas na semana</td></tr>';
+  $('tbSabor').innerHTML=Object.entries(j.porSabor||{}).map(([k,v])=>`<tr><td>${k}</td><td class="mono">${v.fina}</td><td class="mono">${v.grossa}</td><td class="mono">${v.fina+v.grossa}</td></tr>`).join('')||'<tr><td colspan=4>Sem pizza na semana</td></tr>';
+}
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');neg=c.dataset.n;load();});
+document.querySelectorAll('[data-csv]').forEach(b=>b.onclick=()=>window.open(`/api/export.csv?tipo=${b.dataset.csv}`,'_blank'));
+$('load').onclick=load; $('prevW').onclick=()=>{const d=new Date($('de').value+'T12:00:00');d.setDate(d.getDate()-7);setWeek(fmt(d));load();};
+$('thisW').onclick=()=>{setWeek();load();};
+setWeek(); load();
+</script>
+</body>
+</html>

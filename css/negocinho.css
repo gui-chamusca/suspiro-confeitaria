@@ -1,0 +1,82 @@
+/* Meu Negocinho — otimizado mobile-first, não-tech, sem DB */
+:root{
+  --bg:#fff7ed; --ink:#1c1917; --muted:#78716c;
+  --orange:#c2410c; --orange-dark:#7c2d12; --red:#b91c1c; --green:#166534;
+  --card:#ffffff; --line:#e7e5e4; --focus:#f59e0b;
+  --tap:52px; --radius:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.45}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+/* Login */
+.login-screen{min-height:100dvh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--orange),var(--red));padding:20px}
+.login-card{background:#fff;border-radius:20px;padding:28px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.login-card input{width:100%;min-height:var(--tap);padding:14px;font-size:18px;border-radius:12px;border:2px solid #ddd;margin:10px 0}
+.login-card button{width:100%;min-height:var(--tap);font-size:19px;border:none;border-radius:12px;background:var(--orange);color:#fff;font-weight:800;cursor:pointer}
+/* Header enxuto */
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;background:var(--orange-dark);color:#fff;position:sticky;top:0;z-index:10}
+.top h1{margin:0;font-size:20px}.top p{margin:0;font-size:13px;opacity:.92}
+/* Tabs desktop / bottom-bar mobile */
+.tabs{display:flex;gap:8px;padding:10px 12px;background:#ffedd5;position:sticky;top:57px;z-index:9;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:1 0 auto;min-height:48px;min-width:96px;padding:10px 12px;border:2px solid transparent;border-radius:12px;background:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.tabs button.active{background:var(--orange-dark);color:#fff}
+main{max-width:760px;margin:0 auto;padding:14px 14px 110px}
+.tab{display:none}.tab.active{display:block}
+.filter-row{display:flex;gap:8px;margin:4px 0 12px;flex-wrap:wrap}
+.chip{min-height:48px;padding:10px 16px;border-radius:999px;border:2px solid var(--orange);background:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.chip.active{background:var(--orange);color:#fff}
+/* Cards: 1 col no mobile pequeno, 3 no desktop */
+.cards{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+@media(min-width:560px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card span{font-size:14px;color:var(--muted);display:block}
+.card strong{font-size:24px;white-space:nowrap}
+.card.green{border-color:#16a34a}.card.green strong{color:#15803d}
+.card.red{border-color:#dc2626}.card.red strong{color:#b91c1c}
+.card.yellow{border-color:#d97706;background:#fffbeb}
+/* Forms grandes */
+h2{font-size:22px;margin:8px 0}h4{margin:12px 0 8px;font-size:17px}
+.hint{color:#57534e;font-size:14px;background:#fff;border-left:4px solid var(--focus);padding:8px 10px;border-radius:8px}
+label{display:block;margin:10px 0;font-weight:700;font-size:16px}
+input,select,textarea{width:100%;min-height:var(--tap);padding:13px 14px;font-size:18px;border-radius:12px;border:2px solid #d6d3d1;margin-top:6px;background:#fff}
+input[type=number]{inputmode:numeric}
+.grid2{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.grid2{grid-template-columns:1fr 1fr}}
+.box{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px;margin:12px 0}
+/* Produto: nome em cima, stepper + valor embaixo — dedo grande */
+.prod-row{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:12px;margin:10px 0}
+.prod-row b{font-size:16px;display:block;margin-bottom:8px}
+.prod-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stepper{display:flex;align-items:stretch;gap:0;border:2px solid #d6d3d1;border-radius:12px;overflow:hidden}
+.stepper button{flex:0 0 52px;min-height:var(--tap);font-size:24px;font-weight:800;border:none;background:#f5f5f4;cursor:pointer}
+.stepper input{border:none;text-align:center;margin:0;border-radius:0}
+.valor-wrap label{margin:0;font-size:13px;font-weight:700;color:var(--muted)}
+/* Sabores colapsável */
+details.sabores{border:2px solid var(--line);border-radius:var(--radius);background:#fff;padding:6px 12px;margin:10px 0}
+details.sabores summary{min-height:var(--tap);display:flex;align-items:center;font-weight:800;font-size:17px;cursor:pointer}
+.sabor-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end;padding:10px 0;border-top:1px solid var(--line)}
+.sabor-row b{font-size:14px;grid-column:1/-1}
+.fiado-row{display:grid;grid-template-columns:1fr 120px 52px;gap:8px;margin:8px 0}
+.fiado-row button{min-height:var(--tap);border-radius:12px;border:2px solid #ddd;background:#fff;font-size:20px}
+/* CTA fixo no mobile */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,247,237,.96);border-top:2px solid var(--line);backdrop-filter:blur(6px)}
+.sticky-cta .big{margin:0}
+.big{width:100%;min-height:56px;font-size:19px;border:none;border-radius:14px;font-weight:800;color:#fff;cursor:pointer}
+.big:disabled{opacity:.6}
+.big.orange{background:var(--orange)}.big.red{background:var(--red)}.big.green{background:var(--green)}
+.ghost{min-height:48px;padding:10px 16px;border-radius:12px;border:2px dashed #a8a29e;background:#fff;font-size:16px;cursor:pointer}
+.total-line{background:#fef3c7;border:2px solid #d97706;border-radius:12px;padding:14px;margin:12px 0;font-size:18px}
+.list .item{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;font-size:16px}
+.rowbtns{display:flex;gap:8px;margin-top:10px}
+.rowbtns button{flex:1;min-height:48px;border-radius:12px;border:none;font-weight:800;font-size:16px;cursor:pointer}
+.btn-pago{background:#16a34a;color:#fff}.btn-del{background:#fee2e2;color:#7f1d1d}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1c1917;color:#fff;padding:14px 20px;border-radius:999px;display:none;font-size:16px;max-width:90vw;text-align:center}
+.toast.show{display:block}
+/* Desktop: nav lateral simulada + mais respiro */
+@media(min-width:900px){
+  .tabs{top:60px}
+  main{padding-bottom:60px}
+  .sticky-cta{position:static;background:none;border:none;padding:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}

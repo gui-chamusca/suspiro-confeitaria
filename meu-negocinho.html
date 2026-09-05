@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7c2d12">
+<meta name="description" content="Meu Negocinho da Graci — fechamento diário Suspiro + Noite de Pizza. Sem banco de dados, tudo manual.">
+<title>Meu Negocinho — Graci</title>
+<link rel="stylesheet" href="css/negocinho.css">
+</head>
+<body>
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <h1>🧁 Meu Negocinho</h1>
+    <p>Suspiro + Noite de Pizza — da Graci</p>
+    <form id="loginForm">
+      <label>Senha</label>
+      <input type="password" id="password" placeholder="Digite a senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <small>Mesma senha do admin (padrão: suspiro2026)</small>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+<header class="top">
+  <div><h1>🧁 Meu Negocinho</h1><p>Suspiro (dia) + Noite de Pizza (sex-sáb-dom)</p></div>
+  <button id="logoutBtn" class="ghost">Sair</button>
+</header>
+
+<nav class="tabs" aria-label="Navegação principal">
+  <button data-tab="hoje" class="active" aria-current="page">🏠 Hoje</button>
+  <button data-tab="dia">🍰 Lançar Dia</button>
+  <button data-tab="pizza">🍕 Lançar Pizza</button>
+  <button data-tab="fiados">📒 Fiados <span id="fiadoBadge" aria-live="polite"></span></button>
+  <button data-tab="encomendas">📦 Encomendas</button>
+</nav>
+
+<main>
+<!-- HOJE -->
+<section id="tab-hoje" class="tab active">
+  <div class="filter-row">
+    <button class="chip active" data-neg="tudo">Tudo</button>
+    <button class="chip" data-neg="suspiro">🍰 Suspiro</button>
+    <button class="chip" data-neg="pizza">🍕 Pizza</button>
+  </div>
+  <div class="cards">
+    <div class="card green"><span>Entrou hoje</span><strong id="cEntrou">R$ 0</strong></div>
+    <div class="card red"><span>Gastou / Custo hoje</span><strong id="cGastou">R$ 0</strong></div>
+    <div class="card yellow"><span>Sobrou hoje</span><strong id="cSobrou">R$ 0</strong></div>
+  </div>
+  <div class="cards">
+    <div class="card"><span>Semana (7 dias) entrou</span><strong id="wEntrou">R$ 0</strong></div>
+    <div class="card"><span>Semana sobrou</span><strong id="wSobrou">R$ 0</strong></div>
+    <div class="card"><span>Fiado aberto</span><strong id="wFiado">R$ 0</strong></div>
+  </div>
+  <h3>Últimos lançamentos</h3>
+  <div id="recentList" class="list"></div>
+</section>
+
+<!-- LANÇAR DIA -->
+<section id="tab-dia" class="tab" aria-label="Lançar dia">
+  <h2>🍰 Fechamento do Dia — Suspiro</h2>
+  <p class="hint">Passo 1: conta os risquinhos da Folha A. Passo 2: digita QTD com + e −. Passo 3: digita o valor total em R$. Nada calcula sozinho.</p>
+  <label for="diaData">Data <input type="date" id="diaData"></label>
+  <div id="diaProdutos"></div>
+  <div class="box">
+    <h4>Gasto do dia (mercado, embalagem...)</h4>
+    <label for="diaGasto">Quanto gastou hoje? <input type="number" id="diaGasto" inputmode="decimal" placeholder="Ex: 95" min="0" step="0.01"></label>
+    <label for="diaGastoObs">O que comprou? <input type="text" id="diaGastoObs" placeholder="Ex: farinha, leite" autocomplete="off"></label>
+  </div>
+  <div class="box">
+    <h4>Fiado de hoje (só se ficou devendo)</h4>
+    <div id="diaFiados"></div>
+    <button type="button" class="ghost" id="addFiadoDia">+ adicionar fiado</button>
+  </div>
+  <div class="total-line" aria-live="polite">Total vendido: <strong id="diaTotal">R$ 0,00</strong> • Sobrou: <strong id="diaSobrou">R$ 0,00</strong></div>
+  <div class="sticky-cta"><button class="big orange" id="saveDia">💾 Salvar dia</button></div>
+</section>
+
+<!-- LANÇAR PIZZA -->
+<section id="tab-pizza" class="tab" aria-label="Lançar pizza">
+  <h2>🍕 Noite de Pizza — sex/sáb/dom</h2>
+  <p class="hint">Massa congelada = sem desperdício. Fina R$35, grossa R$40. Você digita o total. Sabor é só controle.</p>
+  <label for="pizzaData">Data <input type="date" id="pizzaData"></label>
+  <div class="grid2">
+    <label for="pizzaQtd">Qtd pizzas <input type="number" id="pizzaQtd" inputmode="numeric" min="0" value="0"></label>
+    <label for="pizzaFat">Faturamento total R$ <input type="number" id="pizzaFat" inputmode="decimal" min="0" step="0.01" placeholder="Ex: 350"></label>
+  </div>
+  <details class="sabores">
+    <summary>🍕 Sabores (opcional — toca para abrir)</summary>
+    <div id="pizzaSabores"></div>
+    <div class="hint" id="pizzaHint" aria-live="polite">Esperado pelos sabores: R$ 0</div>
+  </details>
+  <div class="box">
+    <h4>Custos da noite (totais, você digita)</h4>
+    <label for="pizzaCustoMassa">Custo massas R$ <input type="number" id="pizzaCustoMassa" inputmode="decimal" min="0" step="0.01" value="0"></label>
+    <label for="pizzaCustoRecheio">Custo recheios total R$ <input type="number" id="pizzaCustoRecheio" inputmode="decimal" min="0" step="0.01" value="0"></label>
+    <label for="pizzaCustoX">Custo X (luz, absorvido) R$ <input type="number" id="pizzaCustoX" inputmode="decimal" min="0" step="0.01" value="0"></label>
+    <small>Custo por sabor será mapeado depois. Por enquanto usa total.</small>
+  </div>
+  <div class="box">
+    <h4>Fiado da noite</h4>
+    <div id="pizzaFiados"></div>
+    <button type="button" class="ghost" id="addFiadoPizza">+ adicionar fiado</button>
+  </div>
+  <div class="total-line" aria-live="polite">Lucro noite: <strong id="pizzaLucro">R$ 0,00</strong></div>
+  <div class="sticky-cta"><button class="big red" id="savePizza">💾 Salvar noite de pizza</button></div>
+</section>
+
+<!-- FIADOS -->
+<section id="tab-fiados" class="tab">
+  <h2>📒 Quem deve</h2>
+  <div id="fiadosList" class="list"></div>
+</section>
+
+<!-- ENCOMENDAS -->
+<section id="tab-encomendas" class="tab">
+  <h2>📦 Encomendas (bolo / torta futura)</h2>
+  <div class="box">
+    <div class="grid2">
+      <label>Entrega <input type="date" id="encData"></label>
+      <label>Hora <input type="time" id="encHora"></label>
+    </div>
+    <label>Cliente <input type="text" id="encCliente" placeholder="Nome"></label>
+    <label>Telefone <input type="text" id="encTel" placeholder="Whats"></label>
+    <label>O que é <input type="text" id="encOque" placeholder="Ex: Bolo chocolate 2kg"></label>
+    <div class="grid2">
+      <label>Total R$ <input type="number" id="encTotal" min="0" step="0.01"></label>
+      <label>Sinal R$ <input type="number" id="encSinal" min="0" step="0.01" value="0"></label>
+    </div>
+    <button class="big green" id="saveEnc">+ Salvar encomenda</button>
+  </div>
+  <div id="encList" class="list"></div>
+</section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="js/negocinho.js"></script>
+</body>
+</html>

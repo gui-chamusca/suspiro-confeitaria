@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1788631195873,
+    "status": "entregue",
+    "entrega": "2026-09-09",
+    "hora": "18:59",
+    "cliente": "MARTA",
+    "telefone": "9999999999",
+    "oque": "BOLO 2 KG CHOCOLATE",
+    "total": 180,
+    "sinal": 0,
+    "falta": 180
+  }
+]

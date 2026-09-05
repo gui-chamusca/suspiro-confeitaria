@@ -3,7 +3,6 @@ let PRODUTOS = [
   {id:'fatia_torta_doce', nome:'Fatia torta doce', preco:12},
   {id:'fatia_torta_salgada', nome:'Fatia torta salgada', preco:12},
   {id:'torta_inteira', nome:'Torta inteira', preco:60},
-  {id:'bolo_retirada', nome:'Bolo encomenda (retirada hoje)', preco:90},
   {id:'pao_mel', nome:'Pão de mel', preco:8},
   {id:'sanduiche', nome:'Sanduíche natural', preco:12},
   {id:'salada', nome:'Salada pote', preco:15},

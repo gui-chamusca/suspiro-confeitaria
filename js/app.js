@@ -97,7 +97,13 @@ function renderMenu() {
     const menuList = document.getElementById('menuList');
     menuList.innerHTML = '';
 
-    const availableItems = menuItems.filter(item => item.available);
+    // Só o que estiver disponível aparece. Indisponível fica oculto.
+    const availableItems = menuItems.filter(item => item.available !== false);
+
+    if (availableItems.length === 0) {
+        menuList.innerHTML = '<p class="empty-cart">Nada disponível hoje. Volta amanhã! 🧁</p>';
+        return;
+    }
 
     availableItems.forEach(item => {
         const menuItem = createMenuItem(item);

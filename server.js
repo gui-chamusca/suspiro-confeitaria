@@ -64,6 +64,12 @@ function authMiddleware(req, res, next) {
     }
 }
 
+// APIs nunca em cache: celular sempre busca dado fresco
+app.use('/api', (req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+});
+
 // ==================== ROTAS PÚBLICAS ====================
 
 // GET /api/menu - Buscar cardápio (público)

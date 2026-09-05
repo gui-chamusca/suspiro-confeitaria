@@ -48,12 +48,12 @@ async function boot(){
 }
 async function loadAll(){
   const [d,p,f,e,s,pp] = await Promise.all([
-    fetch('/api/vendas-dia').then(r=>r.json()).catch(()=>[]),
-    fetch('/api/noites-pizza').then(r=>r.json()).catch(()=>[]),
-    fetch('/api/fiados').then(r=>r.json()).catch(()=>[]),
-    fetch('/api/encomendas').then(r=>r.json()).catch(()=>[]),
-    fetch('/api/sabores-pizza').then(r=>r.json()).catch(()=>({sabores:[]})),
-    fetch('/api/produtos-suspiro').then(r=>r.json()).catch(()=>({produtos:[]})),
+    fetch('/api/vendas-dia',{cache:'no-store'}).then(r=>r.json()).catch(()=>[]),
+    fetch('/api/noites-pizza',{cache:'no-store'}).then(r=>r.json()).catch(()=>[]),
+    fetch('/api/fiados',{cache:'no-store'}).then(r=>r.json()).catch(()=>[]),
+    fetch('/api/encomendas',{cache:'no-store'}).then(r=>r.json()).catch(()=>[]),
+    fetch('/api/sabores-pizza',{cache:'no-store'}).then(r=>r.json()).catch(()=>({sabores:[]})),
+    fetch('/api/produtos-suspiro',{cache:'no-store'}).then(r=>r.json()).catch(()=>({produtos:[]})),
   ]);
   DB.dias=d; DB.pizzas=p; DB.fiados=f; DB.encomendas=e;
   if (pp.produtos && pp.produtos.length) PRODUTOS = pp.produtos;

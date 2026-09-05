@@ -35,7 +35,7 @@ async function initApp() {
 // Carregar cardápio da API
 async function loadMenuFromAPI() {
     try {
-        const response = await fetch('/api/menu');
+        const response = await fetch('/api/menu', { cache: 'no-store' });
         if (response.ok) {
             const data = await response.json();
             menuItems = data.items || [];
@@ -58,7 +58,7 @@ async function loadMenuFromAPI() {
 // Carregar configurações da API
 async function loadConfigFromAPI() {
     try {
-        const response = await fetch('/api/config');
+        const response = await fetch('/api/config', { cache: 'no-store' });
         if (response.ok) {
             const config = await response.json();
             appConfig.businessName = config.businessName || appConfig.businessName;

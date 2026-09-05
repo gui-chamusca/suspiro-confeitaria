@@ -1,13 +1,13 @@
-const PRODUTOS = [
-  {id:'fatia_bolo', nome:'Fatia bolo / doce'},
-  {id:'fatia_torta_doce', nome:'Fatia torta doce'},
-  {id:'fatia_torta_salgada', nome:'Fatia torta salgada'},
-  {id:'torta_inteira', nome:'Torta inteira'},
-  {id:'bolo_retirada', nome:'Bolo encomenda (retirada hoje)'},
-  {id:'pao_mel', nome:'Pão de mel'},
-  {id:'sanduiche', nome:'Sanduíche natural'},
-  {id:'salada', nome:'Salada pote'},
-  {id:'outro', nome:'Outro'},
+let PRODUTOS = [
+  {id:'fatia_bolo', nome:'Fatia bolo / doce', preco:10},
+  {id:'fatia_torta_doce', nome:'Fatia torta doce', preco:12},
+  {id:'fatia_torta_salgada', nome:'Fatia torta salgada', preco:12},
+  {id:'torta_inteira', nome:'Torta inteira', preco:60},
+  {id:'bolo_retirada', nome:'Bolo encomenda (retirada hoje)', preco:90},
+  {id:'pao_mel', nome:'Pão de mel', preco:8},
+  {id:'sanduiche', nome:'Sanduíche natural', preco:12},
+  {id:'salada', nome:'Salada pote', preco:15},
+  {id:'outro', nome:'Outro', preco:0},
 ];
 let token = sessionStorage.getItem('suspiroAdminToken') || null;
 let SABORES = [];
@@ -48,36 +48,67 @@ async function boot(){
   await loadAll();
 }
 async function loadAll(){
-  const [d,p,f,e,s] = await Promise.all([
+  const [d,p,f,e,s,pp] = await Promise.all([
     fetch('/api/vendas-dia').then(r=>r.json()).catch(()=>[]),
     fetch('/api/noites-pizza').then(r=>r.json()).catch(()=>[]),
     fetch('/api/fiados').then(r=>r.json()).catch(()=>[]),
     fetch('/api/encomendas').then(r=>r.json()).catch(()=>[]),
     fetch('/api/sabores-pizza').then(r=>r.json()).catch(()=>({sabores:[]})),
+    fetch('/api/produtos-suspiro').then(r=>r.json()).catch(()=>({produtos:[]})),
   ]);
   DB.dias=d; DB.pizzas=p; DB.fiados=f; DB.encomendas=e;
+  if (pp.produtos && pp.produtos.length) PRODUTOS = pp.produtos;
   SABORES = s.sabores && s.sabores.length ? s.sabores : [
     {id:'mussarela',nome:'Mussarela'},{id:'calabresa-cebola',nome:'Calabresa com Cebola'},
     {id:'marguerita',nome:'Marguerita'},{id:'portuguesa',nome:'Portuguesa'},
     {id:'frango-catupiry',nome:'Frango Catupiry'},{id:'pera-gorgonzola-mel',nome:'Pera com gorgonzola e mel'},
     {id:'nutella-normal',nome:'Nutella Normal'},{id:'nutella-morango',nome:'Nutella Morango'},
   ];
-  buildPizzaSabores();
+  buildDiaForm(); buildPrecosEditor(); buildPizzaSabores();
   renderHoje(); renderFiados(); renderEncomendas();
 }
 
 // ---------- forms ----------
+function autoValor(id){
+  const pr = PRODUTOS.find(x=>x.id===id); if(!pr) return;
+  const q = Number(document.querySelector(`[data-q="${id}"]`).value)||0;
+  const vEl = document.querySelector(`[data-v="${id}"]`);
+  if (vEl.dataset.manual==='1') return; // respeita digitação manual
+  vEl.value = (q * (Number(pr.preco)||0)).toFixed(2).replace('.00','');
+  calcDia();
+}
 function buildDiaForm(){
   const box = $('diaProdutos'); box.innerHTML='';
   PRODUTOS.forEach(pr=>{
     const div=document.createElement('div'); div.className='prod-row';
-    div.innerHTML=`<b>${pr.nome}</b><div class="prod-controls"><div class="stepper"><button type="button" data-minus="${pr.id}" aria-label="Diminuir ${pr.nome}">−</button><input type="number" min="0" value="0" inputmode="numeric" data-q="${pr.id}" aria-label="Quantidade ${pr.nome}"><button type="button" data-plus="${pr.id}" aria-label="Aumentar ${pr.nome}">+</button></div><div class="valor-wrap"><label>Valor total R$<input type="number" min="0" step="0.01" inputmode="decimal" placeholder="0" data-v="${pr.id}" aria-label="Valor ${pr.nome}"></label></div></div>`;
+    div.innerHTML=`<b>${pr.nome} <small style="color:#78716c">R$ ${pr.preco}</small></b><div class="prod-controls"><div class="stepper"><button type="button" data-minus="${pr.id}" aria-label="Diminuir ${pr.nome}">−</button><input type="number" min="0" value="0" inputmode="numeric" data-q="${pr.id}" aria-label="Quantidade ${pr.nome}"><button type="button" data-plus="${pr.id}" aria-label="Aumentar ${pr.nome}">+</button></div><div class="valor-wrap"><label>Valor total R$<input type="number" min="0" step="0.01" inputmode="decimal" placeholder="0" data-v="${pr.id}" aria-label="Valor ${pr.nome}"></label></div></div>`;
     box.appendChild(div);
   });
-  box.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{const i=box.querySelector(`[data-q="${b.dataset.plus}"]`);i.value=(Number(i.value)||0)+1;calcDia();});
-  box.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{const i=box.querySelector(`[data-q="${b.dataset.minus}"]`);i.value=Math.max(0,(Number(i.value)||0)-1);calcDia();});
-  box.addEventListener('input', calcDia);
-  $('diaGasto').addEventListener('input', calcDia);
+  box.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{const i=box.querySelector(`[data-q="${b.dataset.plus}"]`);i.value=(Number(i.value)||0)+1;const v=box.querySelector(`[data-v="${b.dataset.plus}"]`);v.dataset.manual='';autoValor(b.dataset.plus);});
+  box.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{const i=box.querySelector(`[data-q="${b.dataset.minus}"]`);i.value=Math.max(0,(Number(i.value)||0)-1);const v=box.querySelector(`[data-v="${b.dataset.minus}"]`);v.dataset.manual='';autoValor(b.dataset.minus);});
+  box.querySelectorAll('[data-q]').forEach(i=>i.addEventListener('input',()=>{const v=box.querySelector(`[data-v="${i.dataset.q}"]`);v.dataset.manual='';autoValor(i.dataset.q);}));
+  box.querySelectorAll('[data-v]').forEach(i=>i.addEventListener('input',()=>{i.dataset.manual='1';calcDia();}));
+  const g=$('diaGasto'); if(g && !g.dataset.bound){g.dataset.bound='1';g.addEventListener('input',calcDia);}
+}
+function buildPrecosEditor(){
+  let det=$('precosEditor');
+  if(!det){
+    det=document.createElement('details'); det.className='sabores'; det.id='precosEditor';
+    det.innerHTML=`<summary>⚙ Preços (toca para ajustar)</summary><div id="precosList"></div><button type="button" class="ghost" id="savePrecos" style="margin-top:8px">💾 Salvar preços</button><p class="hint">Muda o preço aqui que o valor preenche sozinho ao apertar + e −. Valor continua editável.</p>`;
+    $('tab-dia').insertBefore(det, $('diaProdutos'));
+    det.querySelector('#savePrecos').onclick=savePrecos;
+  }
+  const list=det.querySelector('#precosList'); list.innerHTML='';
+  PRODUTOS.forEach(pr=>{
+    const r=document.createElement('div'); r.className='fiado-row';
+    r.innerHTML=`<span style="align-self:center"><b>${pr.nome}</b></span><input type="number" min="0" step="0.01" value="${pr.preco}" data-preco="${pr.id}" aria-label="Preço ${pr.nome}"><span></span>`;
+    list.appendChild(r);
+  });
+}
+async function savePrecos(){
+  PRODUTOS.forEach(pr=>{const el=document.querySelector(`[data-preco="${pr.id}"]`); if(el) pr.preco=Number(el.value)||0;});
+  const r=await fetch('/api/produtos-suspiro',{method:'POST',headers:authH(),body:JSON.stringify({produtos:PRODUTOS})});
+  if(r.ok){toast('Preços salvos! ✅');buildDiaForm();}else toast('Erro: confere a senha');
 }
 function calcDia(){
   let total=0;

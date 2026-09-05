@@ -27,6 +27,7 @@ const NOITES_PIZZA_FILE = path.join(__dirname, 'data', 'noites-pizza.json');
 const FIADOS_FILE = path.join(__dirname, 'data', 'fiados.json');
 const ENCOMENDAS_FILE = path.join(__dirname, 'data', 'encomendas.json');
 const SABORES_PIZZA_FILE = path.join(__dirname, 'data', 'sabores-pizza.json');
+const PRODUTOS_SUSPIRO_FILE = path.join(__dirname, 'data', 'produtos-suspiro.json');
 
 function readJsonArray(file, fallback) {
     try {
@@ -161,6 +162,20 @@ app.get('/api/sabores-pizza', (req, res) => {
     } catch (e) {
         res.json({ sabores: [], custo_x_padrao: 0 });
     }
+});
+app.get('/api/produtos-suspiro', (req, res) => {
+    try {
+        const raw = fs.readFileSync(PRODUTOS_SUSPIRO_FILE, 'utf8');
+        res.json(JSON.parse(raw));
+    } catch (e) {
+        res.json({ produtos: [] });
+    }
+});
+app.post('/api/produtos-suspiro', authMiddleware, (req, res) => {
+    try {
+        writeJson(PRODUTOS_SUSPIRO_FILE, req.body);
+        res.json({ success: true });
+    } catch (e) { res.status(500).json({ error: 'Erro ao salvar preços' }); }
 });
 
 // POST protegidos (exigem senha admin)

@@ -8,6 +8,8 @@ const appConfig = {
 // Estado do aplicativo
 let menuItems = [];
 let cart = [];
+let activeCategory = 'Todas';
+const CATEGORIES = ['Todas', 'Doces', 'Salgados', 'Encomenda', 'Porção'];
 
 // ==================== INICIALIZAÇÃO ====================
 
@@ -98,10 +100,13 @@ function renderMenu() {
     menuList.innerHTML = '';
 
     // Só o que estiver disponível aparece. Indisponível fica oculto.
-    const availableItems = menuItems.filter(item => item.available !== false);
+    const availableItems = menuItems.filter(item => item.available !== false)
+        .filter(item => activeCategory === 'Todas' || item.category === activeCategory);
+
+    renderCategoryChips();
 
     if (availableItems.length === 0) {
-        menuList.innerHTML = '<p class="empty-cart">Nada disponível hoje. Volta amanhã! 🧁</p>';
+        menuList.innerHTML = '<p class="empty-cart">Nada disponível aqui hoje. Tenta outra categoria! 🧁</p>';
         return;
     }
 
@@ -138,6 +143,23 @@ function createMenuItem(item) {
         </div>
     `;
     return div;
+}
+
+// Chips de categoria do cardápio
+function renderCategoryChips() {
+    const chipsBox = document.getElementById('catChips');
+    if (!chipsBox) return;
+    chipsBox.innerHTML = '';
+    CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-chip' + (cat === activeCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.addEventListener('click', () => {
+            activeCategory = cat;
+            renderMenu();
+        });
+        chipsBox.appendChild(btn);
+    });
 }
 
 // ==================== CARRINHO ====================
@@ -369,7 +391,7 @@ function getDefaultMenuItems() {
             price: 28.00,
             description: "Massa fofinha com pedaços de paçoca e cobertura caramelizada.",
             image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNENkE1NzQiLz48cmVjdCB4PSIyNSIgeT0iMzUiIHdpZHRoPSI3MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
-            category: "Bolos",
+            category: "Encomenda",
             available: true,
             badge: "popular"
         },
@@ -389,7 +411,7 @@ function getDefaultMenuItems() {
             price: 16.00,
             description: "Mousse aveludado com calda de maracujá fresco por cima.",
             image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIzMCIgeT0iNDUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZDOTUiLz48cGF0aCBkPSIzMCA1NSBRNjAgNDAgOTAgNTUiIHN0cm9rZT0iI0ZGQjc1NCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PC9zdmc+",
-            category: "Tortas",
+            category: "Porção",
             available: true,
             badge: null
         },
@@ -409,7 +431,7 @@ function getDefaultMenuItems() {
             price: 45.00,
             description: "Bolo fofo de cenoura com cobertura generosa de chocolate belga.",
             image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNDUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0NSIgcng9IjgiIGZpbGw9IiNFQTYzMTYiLz48cmVjdCB4PSIyMCIgeT0iMzgiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxNSIgcng9IjgiIGZpbGw9IiM0QTJEQjgiLz48L3N2Zz4=",
-            category: "Bolos",
+            category: "Encomenda",
             available: true,
             badge: null
         },
@@ -419,7 +441,7 @@ function getDefaultMenuItems() {
             price: 55.00,
             description: "Torta cremosa de limão com merengue tostado e base de biscoito.",
             image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48cmVjdCB4PSIyNSIgeT0iNTAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI0MCIgcng9IjgiIGZpbGw9IiNGRkZGIjciLz48cmVjdCB4PSIyMCIgeT0iNDMiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjgiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4=",
-            category: "Tortas",
+            category: "Encomenda",
             available: true,
             badge: "new"
         },
@@ -429,7 +451,7 @@ function getDefaultMenuItems() {
             price: 8.00,
             description: "Cookie crocante com gotas de chocolate belga derretido.",
             image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRkU1RTEiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjU1IiByPSIyNSIgZmlsbD0iI0Q0QTU3NCIvPjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiM0QTJEQjgiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjQ4IiByPSI0IiBmaWxsPSIjNEEyREI4Ii8+PC9zdmc+",
-            category: "Cookies",
+            category: "Doces",
             available: true,
             badge: "new"
         }
